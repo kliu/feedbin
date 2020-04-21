@@ -335,16 +335,15 @@ GEM
       thor (>= 0.14, < 2.0)
     json (2.3.0)
     kgio (2.11.3)
-    librato-metrics (1.6.1)
+    librato-metrics (2.1.2)
       aggregate (~> 0.2.2)
-      faraday (~> 0.7)
-      multi_json
-    librato-rack (1.1.1)
+      faraday
+    librato-rack (2.0.5)
       hetchy (~> 1.0)
-      librato-metrics (~> 1.6)
-    librato-rails (1.4.2)
+      librato-metrics (~> 2.1, >= 2.1.0)
+    librato-rails (2.1.0)
       activesupport (>= 3.0)
-      librato-rack (~> 1.1.0)
+      librato-rack (~> 2.0.0)
       railties (>= 3.0)
     libv8 (7.3.492.27.1)
     listen (3.2.1)
@@ -355,7 +354,7 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.4.0)
+    loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -539,7 +538,7 @@ GEM
     twitter-text (2.1.0)
       idn-ruby
       unf (~> 0.1.0)
-    tzinfo (1.2.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uglifier (4.1.11)
       execjs (>= 0.3.0, < 3)
@@ -611,7 +610,7 @@ DEPENDENCIES
   jbuilder_cache_multi
   jquery-rails
   json
-  librato-rails (= 1.4.2)
+  librato-rails (= 2.1.0)
   listen
   lograge
   mini_racer
