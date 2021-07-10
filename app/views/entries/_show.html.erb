@@ -16,7 +16,7 @@
             </div>
             <div class="entry-buttons">
                 <%= render partial: "entries/delete_button", locals: {entry: entry} %>
-                <%= render partial: "sharing_services/sharing_service_button", locals: {services: services} %>
+                <%= render partial: "sharing_services/sharing_service_button" %>
                 <%= render partial: "entries/toggle_content", locals: {extract: extract, entry: entry} %>
                 <%= render partial: "starred_entries/form", locals: {entry: entry} %>
                 <%= render partial: "unread_entries/form", locals: {entry: entry} %>
@@ -26,6 +26,12 @@
         </div>
     <% end %>
     <script>
-        feedbin.faviconColors($(".entry-toolbar"))
+        try {
+            feedbin.selectedEntryData = <%= raw json_escape({id: entry.id, url: entry.fully_qualified_url, title: entry.title, feed_id: entry.feed_id, feed_title: entry.feed.title, twitter_id: entry.twitter_id || ""}.to_json) %>;
+            feedbin.prepareShareMenu(feedbin.selectedEntryData);
+            feedbin.faviconColors($(".entry-toolbar"));
+        } catch (e) {
+            console.log(e);
+        }
     </script>
 <% end %>

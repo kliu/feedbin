@@ -504,6 +504,14 @@ class User < ApplicationRecord
     can_read
   end
 
+  def combined_sharing_services
+    (sharing_services + supported_sharing_services)
+      .select  { |sharing_service| sharing_service.active?    }
+      .sort_by { |sharing_service| sharing_service.label      }
+      .map     { |sharing_service| sharing_service.share_link }
+      .compact
+  end
+
   def can_read_filter(requested_ids)
     allowed_ids = []
 
@@ -532,6 +540,10 @@ class User < ApplicationRecord
 
   def trialing?
     plan == Plan.find_by_stripe_id("trial")
+  end
+
+  def has_tweet?(main_tweet_id)
+    entries.where(main_tweet_id: main_tweet_id).limit(2).count > 1
   end
 
   def twitter_credentials_valid?

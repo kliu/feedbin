@@ -33,10 +33,6 @@ class IframeEmbed
   def duration; end
   def profile_image; end
 
-  def cache_key
-    "v1"
-  end
-
   def iframe_src
     url = embed_url.dup
     params = Rack::Utils.parse_nested_query(url.query)
@@ -50,7 +46,7 @@ class IframeEmbed
   end
 
   def cache_key
-    Digest::SHA1.hexdigest(embed_url.to_s)
+    "iframe_embed_#{Digest::SHA1.hexdigest(embed_url.to_s)}"
   end
 
   def fetch
@@ -93,6 +89,7 @@ class IframeEmbed
   end
 
   def self.fetch(url)
+    url = normalize_url(url)
     parser = find_embed_source(url)
     parser = parser.new(url)
     parser.fetch
@@ -113,6 +110,16 @@ class IframeEmbed
       IframeEmbed::Soundcloud,
       IframeEmbed::Default
     ]
+  end
+
+  def self.normalize_url(url)
+    if url.start_with?("https://cdn.embedly.com/widgets")
+      parsed = Addressable::URI.parse(url)
+      if parsed.query_values && parsed.query_values["src"]
+        url = parsed.query_values["src"]
+      end
+    end
+    url
   end
 
   def self.supported_urls
